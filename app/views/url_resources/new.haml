@@ -1,0 +1,9 @@
+
+= simple_form_for @url_resource, :html => { :class => 'form-url' } do |f|
+  %h2
+    Enter Url
+  %fieldset  
+    = f.input :url_string, :label => false
+    .control-group
+      .controls
+        = f.submit "Add Url", :class => "btn"

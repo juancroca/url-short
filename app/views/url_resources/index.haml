@@ -1,0 +1,15 @@
+%h1 My Urls
+%table.table.table-striped
+  %thead
+    %tr
+      %th ID
+      %th Url
+      %th Short Url
+      %th Created at
+  %tbody
+    - @url_resources.each do |url_resource|
+      %tr
+        %td= link_to url_resource.id, url_resource_path(url_resource)
+        %td= url_resource.url_string
+        %td= short_url(url_resource.token)
+        %td= url_resource.created_at

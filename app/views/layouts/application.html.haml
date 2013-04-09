@@ -1,0 +1,41 @@
+!!!
+%html
+  %head
+    %title UrlShort
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          %button.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse", :type => "button"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to "Url Shortener", root_path, :class => "brand"
+          .nav-collapse.collapse
+            %ul.nav
+
+              %li{controller.action_name == "landing" && :class => "active"}
+                = link_to "Home", root_path
+              - if user_signed_in?
+                %li{(controller.action_name == "index" && controller.controller_name == "url_resources") && :class => "active"}
+                  = link_to "My Urls", url_resources_path
+                %li{(controller.action_name == "new" && controller.controller_name == "url_resources") && :class => "active"}
+                  = link_to "Add Url", new_url_resource_path
+            - unless user_signed_in?
+              = simple_form_for :user, :url => user_session_path, :html => { :class => 'navbar-form pull-right' } do |f|
+                = f.text_field :email, :label => false, :placeholder => "Email", :class => "span2"
+                = f.password_field :password, :label => false, :placeholder => "Password", :class => "span2"
+                = f.submit "Sign in", :class => "btn"
+                =link_to "Sing Up", new_user_registration_path, :class => "btn btn-primary"
+            - else
+              =link_to "Log Out", destroy_user_session_path, :class => "btn btn btn-danger pull-right", :method => :delete
+          / /.nav-collapse
+    .container
+      - flash.each do |name, msg|
+        %div{:class => "alert alert-#{name == :notice ? "success" : "error"}"}
+          %a.close{"data-dismiss" => "alert"} x
+          = msg
+      = yield

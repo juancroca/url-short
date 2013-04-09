@@ -1,0 +1,22 @@
+%h1
+  Resource
+%p
+  %b
+    Url
+    %br
+  = link_to @url_resource.url_string, @url_resource.url_string
+%p
+  %b
+    Short Url
+    %br
+  = link_to short_url(@url_resource.token), short_path(@url_resource.token)
+%p
+  %b
+    Browser
+    %br
+  - @url_resource.browsers.each do |browser|
+    %i
+      = browser[0]
+    = pluralize browser[1], 'visit'
+    %br
+
